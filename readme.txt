@@ -1,0 +1,1 @@
+To run the program, enter:  java lab1 [inputFile] [outputfile]
