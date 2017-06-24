@@ -10,6 +10,7 @@ public class Lab1 {
     private L3Parser l3Parser;
     private L4Parser l4Parser;
     private L5Parser l5Parser;
+    private L6Parser l6Parser;
 
     public Lab1() {
         this.l1Parser = new L1Parser();
@@ -17,6 +18,7 @@ public class Lab1 {
         this.l3Parser = new L3Parser();
         this.l4Parser = new L4Parser();
         this.l5Parser = new L5Parser();
+        this.l6Parser = new L6Parser();
     }
 
     /**
@@ -86,6 +88,7 @@ public class Lab1 {
             this.l3Parser.handleLetter(letter);
             this.l4Parser.handleLetter(letter);
             this.l5Parser.handleLetter(letter);
+            this.l6Parser.handleLetter(letter);
         }
     }
 
@@ -95,6 +98,7 @@ public class Lab1 {
         this.l3Parser.resetParser();
         this.l4Parser.resetParser();
         this.l5Parser.resetParser();
+        this.l6Parser.resetParser();
     }
 
     private void checkTruthinessAndWriteOut(char[] line, BufferedWriter out) {
@@ -120,7 +124,12 @@ public class Lab1 {
             }
             if (this.l5Parser.isPatternMatch()) {
                 out.write(' ');
-                out.write("L5");            }
+                out.write("L5");
+            }
+            if (this.l6Parser.isPatternMatch()) {
+                out.write(' ');
+                out.write("L6");
+            }
             out.newLine();
         } catch (IOException e) {
             System.err.println(e);
