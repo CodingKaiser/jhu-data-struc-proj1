@@ -1,5 +1,8 @@
 /**
- * Created by falko on 20-06-17.
+ * An interface that defines the behavior for the language
+ * parsers. All language parsers will implement this interface.
+ * @author Falko Noe
+ * @version 1.0
  */
 public interface LanguageParser {
     boolean isPatternMatch();

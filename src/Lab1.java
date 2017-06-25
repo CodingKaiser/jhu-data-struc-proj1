@@ -1,7 +1,10 @@
 import java.io.*;
 
 /**
- * Created by Falko Noe.
+ * Lab 1: Parses input and checks whether or not lines of text match
+ * the pattern specified by specific languages.
+ * @author Falko Noe
+ * @version 1.0
  */
 public class Lab1 {
 
@@ -12,6 +15,9 @@ public class Lab1 {
     private L5Parser l5Parser;
     private L6Parser l6Parser;
 
+    /**
+     * The constructor for the Lab1 object, which initializes the parsers
+     */
     public Lab1() {
         this.l1Parser = new L1Parser();
         this.l2Parser = new L2Parser();
@@ -22,7 +28,9 @@ public class Lab1 {
     }
 
     /**
-     * The main entry-point to the program. Runs and executes all logic of the program
+     * The main entry-point to the program. Runs and executes all logic of the program:
+     * Instantiates the parsers, sets up the I/O logic, and writes the output to a file
+     * specified by the user's input.
      * @param args Holds the command-line arguments passed into the program,
      *             which should only be composed of the path to an input file
      *             and the path to an output file.
@@ -81,17 +89,33 @@ public class Lab1 {
         }
     }
 
+    /**
+     * Iterates through character in the line, and hands them
+     * off to each individual parser for specific handling
+     * @param line: A character array corresponding to each line
+     *            of the input. Each element in the array corresponds
+     *            to a character in the line
+     */
     private void parseLine(char[] line) {
         for (char letter : line) {
-            this.l1Parser.handleLetter(letter);
-            this.l2Parser.handleLetter(letter);
-            this.l3Parser.handleLetter(letter);
-            this.l4Parser.handleLetter(letter);
-            this.l5Parser.handleLetter(letter);
-            this.l6Parser.handleLetter(letter);
+            if (((Character) letter).equals(' ')) {
+                System.err.println("Line: " + (new String(line)) +
+                                    " contains whitespace. Trimming...");
+            } else {
+                this.l1Parser.handleLetter(letter);
+                this.l2Parser.handleLetter(letter);
+                this.l3Parser.handleLetter(letter);
+                this.l4Parser.handleLetter(letter);
+                this.l5Parser.handleLetter(letter);
+                this.l6Parser.handleLetter(letter);
+            }
         }
     }
 
+    /**
+     * Resets all of the parsers to make them ready for
+     * another line of input.
+     */
     private void resetAllParsers() {
         this.l1Parser.resetParser();
         this.l2Parser.resetParser();
@@ -101,6 +125,14 @@ public class Lab1 {
         this.l6Parser.resetParser();
     }
 
+    /**
+     * Checks each parser for whether the input line matched and
+     * writes the result to the BufferedWriter object in a
+     * human-readable format.
+     * @param line: The line that was just parsed.
+     * @param out: The BufferedWriter object which will write
+     *           the formatted results to stdout.
+     */
     private void checkTruthinessAndWriteOut(char[] line, BufferedWriter out) {
         try {
             out.write("'");

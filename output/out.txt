@@ -73,6 +73,9 @@ Matches: L3 L4
 'AABBBBAABBBB'
 Matches: L4
 
+'    AABBBB  AABBBB'
+Matches: L4
+
 'AABBBBBAABBBB'
 Matches: None
 
