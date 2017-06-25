@@ -1,6 +1,6 @@
 /**
  * A parser that parses the language L2:
- * (equal # of As and Bs in any order)
+ * A^nB^n
  * Strings supported:
  * ''
  * 'AAABBB'
