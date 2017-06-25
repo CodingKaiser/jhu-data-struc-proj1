@@ -1,7 +1,7 @@
 import java.io.*;
 
 /**
- * Created by falko on 17-06-17.
+ * Created by Falko Noe.
  */
 public class Lab1 {
 
@@ -103,33 +103,41 @@ public class Lab1 {
 
     private void checkTruthinessAndWriteOut(char[] line, BufferedWriter out) {
         try {
-            System.out.println(this.l1Parser.isPatternMatch());
+            out.write("'");
             out.write(line);
+            out.write("'");
+            out.newLine();
+            out.write("Matches:");
+            boolean atLeastOneMatch = false;
 //            LanguageParser[] allParsers;
             if (this.l1Parser.isPatternMatch()) {
-                out.write(' ');
-                out.write("L1");
+                atLeastOneMatch = true;
+                out.write(" L1");
             }
             if (this.l2Parser.isPatternMatch()) {
-                out.write(' ');
-                out.write("L2");
+                atLeastOneMatch = true;
+                out.write(" L2");
             }
             if (this.l3Parser.isPatternMatch()) {
-                out.write(' ');
-                out.write("L3");
+                atLeastOneMatch = true;
+                out.write(" L3");
             }
             if (this.l4Parser.isPatternMatch()) {
-                out.write(' ');
-                out.write("L4");
+                atLeastOneMatch = true;
+                out.write(" L4");
             }
             if (this.l5Parser.isPatternMatch()) {
-                out.write(' ');
-                out.write("L5");
+                atLeastOneMatch = true;
+                out.write(" L5");
             }
             if (this.l6Parser.isPatternMatch()) {
-                out.write(' ');
-                out.write("L6");
+                atLeastOneMatch = true;
+                out.write(" L6");
             }
+            if (!atLeastOneMatch) {
+                out.write(" None");
+            }
+            out.newLine();
             out.newLine();
         } catch (IOException e) {
             System.err.println(e);

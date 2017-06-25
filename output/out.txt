@@ -1,35 +1,105 @@
-AAABBB L1 L2 L4
-AB L1 L2 L4
- L1 L2 L3 L4 L6
-ABABABA
-ABAB L1 L4
-BBAA L1
-BBBAA
-AAB L4
-AABBCCD
-ABCBA L5
-ABBBA
-ABBA L1
-ABAABBAAABBB L1
-AABACABAA L5
-AABBBAABBB L4
-BBBB L4
-B L4
-BB L4
-AAAA L4
-A L4
-AA L4
-AABACABAAAABACABAA
-ABB L3 L4
-AABBBB L3 L4
-AABBBBAABBBB L4
-AABBBBBAABBBB
-AABACDABAA
-C L5
-ACA L5
-BCB L5
-AC
-CB
-AABBAA L6
-AAABBBAAA L6
-AAAABBBAAA
+'AAABBB'
+Matches: L1 L2 L4
+
+'AB'
+Matches: L1 L2 L4
+
+''
+Matches: L1 L2 L3 L4 L6
+
+'ABABABA'
+Matches: None
+
+'ABAB'
+Matches: L1 L4
+
+'BBAA'
+Matches: L1
+
+'BBBAA'
+Matches: None
+
+'AAB'
+Matches: L4
+
+'AABBCCD'
+Matches: None
+
+'ABCBA'
+Matches: L5
+
+'ABBBA'
+Matches: None
+
+'ABBA'
+Matches: L1
+
+'ABAABBAAABBB'
+Matches: L1
+
+'AABACABAA'
+Matches: L5
+
+'AABBBAABBB'
+Matches: L4
+
+'BBBB'
+Matches: L4
+
+'B'
+Matches: L4
+
+'BB'
+Matches: L4
+
+'AAAA'
+Matches: L4
+
+'A'
+Matches: L4
+
+'AA'
+Matches: L4
+
+'AABACABAAAABACABAA'
+Matches: None
+
+'ABB'
+Matches: L3 L4
+
+'AABBBB'
+Matches: L3 L4
+
+'AABBBBAABBBB'
+Matches: L4
+
+'AABBBBBAABBBB'
+Matches: None
+
+'AABACDABAA'
+Matches: None
+
+'C'
+Matches: L5
+
+'ACA'
+Matches: L5
+
+'BCB'
+Matches: L5
+
+'AC'
+Matches: None
+
+'CB'
+Matches: None
+
+'AABBAA'
+Matches: L6
+
+'AAABBBAAA'
+Matches: L6
+
+'AAAABBBAAA'
+Matches: None
+
