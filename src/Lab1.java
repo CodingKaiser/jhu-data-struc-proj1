@@ -42,7 +42,7 @@ public class Lab1 {
         Lab1 lab;
 
         if (args.length != 2) {
-            System.err.println("Usage:  java Project0 [input file pathname]" +
+            System.err.println("Usage:  java Lab1 [input file pathname]" +
                     " [output file pathname]");
             System.exit(1);
         }
@@ -71,7 +71,7 @@ public class Lab1 {
      * 1. iterates through the lines in the input file,
      * 2. calls a method which checks whether the line matched any of the languages
      *    and writes the output for that line,
-* and gets the parsers ready for the next line.
+     *    and gets the parsers ready for the next line.
      * @param in The BufferedReader which contains the information from the input file
      * @param out The BufferedWriter which will write the output
      */
