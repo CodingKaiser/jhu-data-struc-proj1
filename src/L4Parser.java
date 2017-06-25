@@ -1,5 +1,17 @@
 /**
- * Created by falko on 22-06-17.
+ * A parser that parses the language L4:
+ * (A^nB^m)^p
+ * Strings supported:
+ * ''
+ * 'AABB'
+ * 'BBB'
+ * 'AA'
+ * 'ABABAB'
+ * 'AAAABBBBBBBB'
+ * 'ABBBBBBBB'
+ *
+ * @author Falko Noe
+ * @version 1.0
  */
 public class L4Parser implements LanguageParser {
 
@@ -7,12 +19,20 @@ public class L4Parser implements LanguageParser {
     private StackLL<Character> repeatedPattern;
     private boolean patternIsLocked;
 
+    /**
+     * The constructor for the application
+     */
     public L4Parser() {
         this.inOrder = new StackLL<>();
         this.repeatedPattern = new StackLL<>();
         this.patternIsLocked = false;
     }
 
+    /**
+     * Takes in a character and handles it according to L4
+     * language constraints
+     * @param letter: The character currently being parsed.
+     */
     public void handleLetter(Character letter) {
         try {
             if (letter.equals('A') || letter.equals('B')) {
@@ -49,10 +69,19 @@ public class L4Parser implements LanguageParser {
 
     }
 
+    /**
+     * Checks whether the string of characters matches the L4 pattern
+     * @return:True if the sequence of characters matches the
+     * L4 pattern, false otherwise
+     */
     public boolean isPatternMatch() {
         return inOrder.isEmpty();
     }
 
+    /**
+     * Resets the stacks of the application in preparation for further
+     * input.
+     */
     public void resetParser() {
         this.inOrder = new StackLL<>();
         this.repeatedPattern = new StackLL<>();
