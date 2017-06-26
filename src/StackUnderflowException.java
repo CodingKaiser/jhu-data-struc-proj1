@@ -8,13 +8,13 @@
  */
 class StackUnderflowException extends Exception {
 
-    /**
-     * Simply calls Exception constructor for
-     * displaying the provided message to stderr
-     * @param message: The string explaining the error
-     *               and why it occurred.
-     */
-    StackUnderflowException(String message) {
-        super(message);
-    }
+  /**
+   * Simply calls Exception constructor for
+   * displaying the provided message to stderr
+   * @param message: The string explaining the error
+   *                 and why it occurred.
+   */
+  StackUnderflowException(String message) {
+    super(message);
+  }
 }
