@@ -98,17 +98,12 @@ public class Lab1 {
      */
     private void parseLine(char[] line) {
         for (char letter : line) {
-            if (((Character) letter).equals(' ')) {
-                System.err.println("Line: " + (new String(line)) +
-                                    " contains whitespace. Trimming...");
-            } else {
-                this.l1Parser.handleLetter(letter);
-                this.l2Parser.handleLetter(letter);
-                this.l3Parser.handleLetter(letter);
-                this.l4Parser.handleLetter(letter);
-                this.l5Parser.handleLetter(letter);
-                this.l6Parser.handleLetter(letter);
-            }
+            this.l1Parser.handleLetter(letter);
+            this.l2Parser.handleLetter(letter);
+            this.l3Parser.handleLetter(letter);
+            this.l4Parser.handleLetter(letter);
+            this.l5Parser.handleLetter(letter);
+            this.l6Parser.handleLetter(letter);
         }
     }
 

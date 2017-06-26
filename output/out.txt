@@ -89,7 +89,7 @@ Matches: None
 Matches: L4
 
 '    AABBBB  AABBBB'
-Matches: L4
+Matches: None
 
 'AABBBBBAABBBB'
 Matches: None
