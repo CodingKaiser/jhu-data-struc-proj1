@@ -12,14 +12,16 @@
  */
 public class L2Parser implements LanguageParser {
   private StackLL<Character> all;
-  private StackLL<Character> bOnly;
+  private boolean startedParsing;
+  private boolean patternMatch;
 
   /**
    * The constructor for the application
    */
   L2Parser() {
     this.all = new StackLL<>();
-    this.bOnly = new StackLL<>();
+    this.startedParsing = false;
+    this.patternMatch = true;
   }
 
   /**
@@ -28,10 +30,25 @@ public class L2Parser implements LanguageParser {
    * @param letter: The character currently being parsed.
    */
   public void handleLetter(Character letter) {
-    if (letter.equals('B')) {
-      this.bOnly.push(letter);
+    if (this.all.isEmpty() && this.startedParsing) {
+      // Needed for edge cases like 'AABBAB' where Stack is empty at end
+      this.patternMatch = false;
+      this.all.push(letter);
+    } else if (this.all.isEmpty()) {
+      this.startedParsing = true; // See first case
+      this.all.push(letter);
+    } else if (letter.equals('A')) {
+      this.all.push(letter);
+    } else if (letter.equals('B') && this.all.peek().equals('A')) {
+      try {
+        this.all.pop();
+      } catch (StackUnderflowException e) {
+        System.err.println(e);
+        this.patternMatch = false;
+      }
+    } else {
+      this.all.push(letter);
     }
-    this.all.push(letter);
   }
 
   /**
@@ -40,20 +57,7 @@ public class L2Parser implements LanguageParser {
    * L2 pattern, false otherwise
    */
   public boolean isPatternMatch() {
-    try {
-      while (!this.all.isEmpty() && this.all.peek().equals('B')) {
-        this.all.pop();
-      }
-      while (!this.all.isEmpty() && !this.bOnly.isEmpty() &&
-          this.all.peek().equals('A') && this.bOnly.peek().equals('B')) {
-        this.all.pop();
-        this.bOnly.pop();
-      }
-    } catch (StackUnderflowException e) {
-      System.err.println(e);
-      System.err.println("Algorithm doesn't handle all cases. Disregard L2 parser's answers.");
-    }
-    return this.all.isEmpty() && this.bOnly.isEmpty();
+    return (patternMatch && this.all.isEmpty());
   }
 
   /**
@@ -62,6 +66,7 @@ public class L2Parser implements LanguageParser {
    */
   public void resetParser() {
     all = new StackLL<>();
-    bOnly = new StackLL<>();
+    this.patternMatch = true;
+    this.startedParsing = false;
   }
 }
