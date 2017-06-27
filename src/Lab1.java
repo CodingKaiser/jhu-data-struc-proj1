@@ -1,4 +1,5 @@
 import java.io.*;
+import java.nio.Buffer;
 
 /**
  * Lab 1: Parses input and checks whether or not lines of text match
@@ -77,13 +78,23 @@ public class Lab1 {
    */
   private void parseLinesInInput(BufferedReader in, BufferedWriter out) {
     try {
-      String line;
-      while ((line = in.readLine()) != null) {
-        char[] charactersInLine = line.toCharArray();
-        parseLine(charactersInLine);
-        checkTruthinessAndWriteOut(charactersInLine, out);
-        resetAllParsers();
+      int curr;
+      out.write("'");
+      while ((curr = in.read()) != -1) {
+        Character letter = (char) curr;
+        // Check for Windows special eol \r\n
+        if (!letter.equals('\r')) {
+          if (!letter.equals('\n')) {
+            parseCharacter(letter);
+            out.write(letter);
+          } else {
+            checkTruthinessAndWriteOut(out);
+            resetAllParsers();
+          }
+        }
       }
+      checkTruthinessAndWriteOut(out);
+      resetAllParsers();
     } catch (IOException e) {
       System.err.println(e);
     }
@@ -92,19 +103,16 @@ public class Lab1 {
   /**
    * Iterates through character in the line, and hands them
    * off to each individual parser for specific handling
-   * @param line: A character array corresponding to each line
-   *             of the input. Each element in the array corresponds
-   *             to a character in the line
+   * @param letter: A character corresponding to each character
+   *               of the input.
    */
-  private void parseLine(char[] line) {
-    for (char letter : line) {
-      this.l1Parser.handleLetter(letter);
-      this.l2Parser.handleLetter(letter);
-      this.l3Parser.handleLetter(letter);
-      this.l4Parser.handleLetter(letter);
-      this.l5Parser.handleLetter(letter);
-      this.l6Parser.handleLetter(letter);
-    }
+  private void parseCharacter(Character letter) {
+    this.l1Parser.handleLetter(letter);
+    this.l2Parser.handleLetter(letter);
+    this.l3Parser.handleLetter(letter);
+    this.l4Parser.handleLetter(letter);
+    this.l5Parser.handleLetter(letter);
+    this.l6Parser.handleLetter(letter);
   }
 
   /**
@@ -124,14 +132,11 @@ public class Lab1 {
    * Checks each parser for whether the input line matched and
    * writes the result to the BufferedWriter object in a
    * human-readable format.
-   * @param line: The line that was just parsed.
    * @param out: The BufferedWriter object which will write
    *             the formatted results to stdout.
    */
-  private void checkTruthinessAndWriteOut(char[] line, BufferedWriter out) {
+  private void checkTruthinessAndWriteOut(BufferedWriter out) {
     try {
-      out.write("'");
-      out.write(line);
       out.write("'");
       out.newLine();
       out.write("Matches:");
@@ -165,6 +170,7 @@ public class Lab1 {
       }
       out.newLine();
       out.newLine();
+      out.write("'");
     } catch (IOException e) {
       System.err.println(e);
       System.err.println("Couldn't write the result to out.");
