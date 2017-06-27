@@ -58,6 +58,12 @@ Matches: L1
 'BBBAAA'
 Matches: L1
 
+'AABBAB'
+Matches: L1
+
+'BABB'
+Matches: None
+
 'B'
 Matches: L4
 
@@ -81,6 +87,9 @@ Matches: L3 L4
 
 'AABBBB'
 Matches: L3 L4
+
+'AABB'
+Matches: L1 L2 L4
 
 'BBAAAA'
 Matches: None
@@ -121,3 +130,4 @@ Matches: L6
 'AAAABBBAAA'
 Matches: None
 
+'
