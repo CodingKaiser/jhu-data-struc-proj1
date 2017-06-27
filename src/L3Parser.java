@@ -13,14 +13,16 @@
 public class L3Parser implements LanguageParser {
 
   private StackLL<Character> all;
-  private StackLL<Character> bOnly;
+  private boolean startedParsing;
+  private boolean patternMatch;
 
   /**
    * The constructor for the application
    */
   L3Parser() {
     all = new StackLL<>();
-    bOnly = new StackLL<>();
+    this.startedParsing = false;
+    this.patternMatch = true;
   }
 
   /**
@@ -29,10 +31,34 @@ public class L3Parser implements LanguageParser {
    * @param letter: The character currently being parsed.
    */
   public void handleLetter(Character letter) {
-    if (letter.equals('B')) {
-      bOnly.push(letter);
+    if (this.all.isEmpty() && this.startedParsing) {
+      // Needed for edge cases like 'AABBBBABB' where Stack is empty at end
+      this.patternMatch = false;
+      this.all.push(letter);
+    } else if (this.all.isEmpty()) {
+      this.startedParsing = true; // see first case
+      this.all.push(letter);
+    } else if (letter.equals('A')) {
+      this.all.push(letter);
+    } else if (letter.equals('B')) {
+      try {
+        if (this.all.peek().equals('A')) {
+          // only push an additional B if only one B is on Stack
+          this.all.push(letter);
+        } else if (this.all.peek().equals('B')) {
+          // Pop the stack, to check whether 2nd-from-top matches pattern
+          Character top = this.all.pop();
+          if (!this.all.isEmpty() && this.all.peek().equals('A')) {
+            this.all.pop();
+          } else {
+            this.all.push(letter);
+          }
+        }
+      } catch (StackUnderflowException e) {
+        System.err.println(e);
+        this.patternMatch = false;
+      }
     }
-    all.push(letter);
   }
 
   /**
@@ -41,38 +67,7 @@ public class L3Parser implements LanguageParser {
    * L3 pattern, false otherwise
    */
   public boolean isPatternMatch() {
-    while (!this.all.isEmpty() && this.all.peek().equals('B')) {
-      try {
-        this.all.pop();
-      } catch (StackUnderflowException e) {
-        System.err.println(e);
-        System.err.println("Algorithm doesn't handle all cases. Disregard L3 parser's answers.");
-      }
-    }
-    while (!all.isEmpty()) {
-      try {
-        Character allTop = all.pop();
-        if (allTop.equals('A')) {
-          if (bOnly.isEmpty()) {
-            return false;
-          } else {
-            Character bTop = bOnly.pop();
-            if (bOnly.isEmpty()) {
-              return false;
-            } else {
-              bOnly.pop();
-            }
-          }
-        } else {
-          return false;
-        }
-      } catch (StackUnderflowException e) {
-        System.err.println(e);
-        System.err.println("Algorithm doesn't handle all cases. Disregard L3 parser's answers.");
-        break;
-      }
-    }
-    return bOnly.isEmpty();
+    return (this.all.isEmpty() && this.patternMatch);
   }
 
   /**
@@ -81,6 +76,7 @@ public class L3Parser implements LanguageParser {
    */
   public void resetParser() {
     all = new StackLL<>();
-    bOnly = new StackLL<>();
+    this.patternMatch = true;
+    this.startedParsing = false;
   }
 }
