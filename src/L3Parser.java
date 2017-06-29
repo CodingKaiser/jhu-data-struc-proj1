@@ -15,6 +15,7 @@ public class L3Parser implements LanguageParser {
   private StackLL<Character> all;
   private boolean startedParsing;
   private boolean patternMatch;
+  private boolean wasErr;
 
   /**
    * The constructor for the application
@@ -23,6 +24,7 @@ public class L3Parser implements LanguageParser {
     all = new StackLL<>();
     this.startedParsing = false;
     this.patternMatch = true;
+    this.wasErr = false;
   }
 
   /**
@@ -56,8 +58,12 @@ public class L3Parser implements LanguageParser {
         }
       } catch (StackUnderflowException e) {
         System.err.println(e);
-        this.patternMatch = false;
+        System.err.println("Algorithm ran into Stack underflow. " +
+                "Disregard L3 parser's answers.");
+        this.wasErr = true;
       }
+    } else {
+      this.all.push(letter);
     }
   }
 
@@ -78,5 +84,15 @@ public class L3Parser implements LanguageParser {
     all = new StackLL<>();
     this.patternMatch = true;
     this.startedParsing = false;
+    this.wasErr = false;
+  }
+
+  /**
+   * Gets the boolean value which reflects if the algorithm encountered
+   * an error during runtime.
+   * @return True if the algorithm encountered an error, false otherwise
+   */
+  public boolean isErrorOccurred() {
+    return this.wasErr;
   }
 }

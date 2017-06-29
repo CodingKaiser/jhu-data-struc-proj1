@@ -14,12 +14,14 @@
 public class L5Parser implements LanguageParser {
 
   StackLL<Character> st;
+  private boolean wasErr;
 
   /**
    * The constructor for the application
    */
   public L5Parser() {
     this.st = new StackLL<>();
+    this.wasErr = false;
   }
 
   /**
@@ -39,6 +41,9 @@ public class L5Parser implements LanguageParser {
         }
       } catch (StackUnderflowException e) {
         System.err.println(e);
+        System.err.println("Algorithm ran into Stack underflow. " +
+                "Disregard L5 parser's answers.");
+        this.wasErr = true;
       }
     } else {
       this.st.push(letter);
@@ -59,6 +64,9 @@ public class L5Parser implements LanguageParser {
       return (this.st.pop().equals('C') && this.st.isEmpty());
     } catch (StackUnderflowException e) {
       System.err.println(e);
+      System.err.println("Algorithm ran into Stack underflow. " +
+              "Disregard L5 parser's answers.");
+      this.wasErr = true;
     }
     return false;
   }
@@ -69,5 +77,15 @@ public class L5Parser implements LanguageParser {
    */
   public void resetParser() {
     this.st = new StackLL<>();
+    this.wasErr = false;
+  }
+
+  /**
+   * Gets the boolean value which reflects if the algorithm encountered
+   * an error during runtime.
+   * @return True if the algorithm encountered an error, false otherwise
+   */
+  public boolean isErrorOccurred() {
+    return this.wasErr;
   }
 }

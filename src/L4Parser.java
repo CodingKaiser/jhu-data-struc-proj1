@@ -18,6 +18,8 @@ public class L4Parser implements LanguageParser {
   private StackLL<Character> inOrder;
   private StackLL<Character> repeatedPattern;
   private boolean patternIsLocked;
+  private boolean patternMatch;
+  private boolean wasErr;
 
   /**
    * The constructor for the application
@@ -25,46 +27,64 @@ public class L4Parser implements LanguageParser {
   public L4Parser() {
     this.inOrder = new StackLL<>();
     this.repeatedPattern = new StackLL<>();
+    this.patternMatch = true;
     this.patternIsLocked = false;
+    this.wasErr = false;
   }
 
   /**
    * Takes in a character and handles it according to L4
-   * language constraints
+   * language constraints.
    * @param letter: The character currently being parsed.
    */
   public void handleLetter(Character letter) {
     try {
       if (letter.equals('A') || letter.equals('B')) {
         if (repeatedPattern.isEmpty() && inOrder.isEmpty()) {
+          // We're at the beginning of the string
           repeatedPattern.push(letter);
-        } else if (inOrder.isEmpty() && repeatedPattern.peek().equals('B') && letter.equals('A')) {
+        } else if (inOrder.isEmpty() &&
+                   repeatedPattern.peek().equals('B') &&
+                   letter.equals('A')) {
+          // Pick the first string of A^mB^n as the template
           patternIsLocked = true;
           while (!repeatedPattern.isEmpty()) {
+            /* inOrder stack will allow us to test subsequent strings
+             * for the locked pattern in the order in which they are
+             * parsed in. */
             inOrder.push(repeatedPattern.pop());
           }
           if (letter.equals(inOrder.peek())) {
+            /* */
             repeatedPattern.push(inOrder.pop());
           } else {
             inOrder.push(letter);
           }
         } else if (inOrder.isEmpty() && !patternIsLocked) {
+          // Build up initial pattern
           repeatedPattern.push(letter);
         } else if (!inOrder.isEmpty()) {
+          /* While parsing strings past the initial pattern
+           * pop letters back into repeatedPattern if the
+           * current letter being parsed matches */
           if (letter.equals(inOrder.peek())) {
             repeatedPattern.push(inOrder.pop());
           } else {
-            inOrder.push('C');
+            this.patternMatch = false;
           }
         } else {
-          inOrder.push('C');
+          // Push invalid characters onto the stack
+          this.patternMatch = false;
         }
       } else {
-        inOrder.push('C');
+        // Push invalid characters onto the stack
+        this.patternMatch = false;
       }
     } catch (StackUnderflowException e) {
       System.err.println(e);
-      System.err.println("Shouldn't be trusted.");
+      System.err.println("Algorithm ran into Stack underflow. " +
+              "Disregard L4 parser's answers.");
+      this.wasErr = true;
     }
   }
 
@@ -74,7 +94,7 @@ public class L4Parser implements LanguageParser {
    * L4 pattern, false otherwise
    */
   public boolean isPatternMatch() {
-    return inOrder.isEmpty();
+    return this.patternMatch && inOrder.isEmpty();
   }
 
   /**
@@ -84,6 +104,17 @@ public class L4Parser implements LanguageParser {
   public void resetParser() {
     this.inOrder = new StackLL<>();
     this.repeatedPattern = new StackLL<>();
+    this.patternMatch = true;
     this.patternIsLocked = false;
+    this.wasErr = false;
+  }
+
+  /**
+   * Gets the boolean value which reflects if the algorithm encountered
+   * an error during runtime.
+   * @return True if the algorithm encountered an error, false otherwise
+   */
+  public boolean isErrorOccurred() {
+    return this.wasErr;
   }
 }

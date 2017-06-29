@@ -13,12 +13,14 @@
 public class L1Parser implements LanguageParser {
 
   private StackLL<Character> st;
+  private boolean wasErr;
 
   /**
    * The constructor for the application
    */
   L1Parser() {
     this.st = new StackLL<>();
+    this.wasErr = false;
   }
 
   /**
@@ -35,7 +37,9 @@ public class L1Parser implements LanguageParser {
         this.st.pop();
       } catch (StackUnderflowException e) {
         System.err.println(e);
-        System.err.println("Algorithm doesn't handle all cases. Disregard L1 parser's answers.");
+        System.err.println("Algorithm ran into Stack underflow. " +
+                            "Disregard L1 parser's answers.");
+        this.wasErr = true;
       }
     } else if (letter.equals('A') && this.st.peek().equals('A') ||
            letter.equals('B') && this.st.peek().equals('B') ||
@@ -59,5 +63,15 @@ public class L1Parser implements LanguageParser {
    */
   public void resetParser() {
     this.st = new StackLL<>();
+    this.wasErr = false;
+  }
+
+  /**
+   * Gets the boolean value which reflects if the algorithm encountered
+   * an error during runtime.
+   * @return True if the algorithm encountered an error, false otherwise
+   */
+  public boolean isErrorOccurred() {
+    return this.wasErr;
   }
 }

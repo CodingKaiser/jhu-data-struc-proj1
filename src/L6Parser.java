@@ -12,9 +12,10 @@
  */
 public class L6Parser implements LanguageParser {
 
-  StackLL<Character> all;
-  StackLL<Character> aOnly;
-  StackLL<Character> bOnly;
+  private StackLL<Character> all;
+  private StackLL<Character> aOnly;
+  private StackLL<Character> bOnly;
+  private boolean wasErr;
 
   /**
    * The constructor for the application
@@ -23,6 +24,7 @@ public class L6Parser implements LanguageParser {
     this.all = new StackLL<>();
     this.aOnly = new StackLL<>();
     this.bOnly = new StackLL<>();
+    this.wasErr = false;
   }
 
   /**
@@ -41,7 +43,9 @@ public class L6Parser implements LanguageParser {
         }
       } catch (StackUnderflowException e) {
         System.err.println(e);
-
+        System.err.println("Algorithm ran into Stack underflow. " +
+                "Disregard L6 parser's answers.");
+        this.wasErr = true;
       }
       this.aOnly.push(letter);
     } else {
@@ -66,7 +70,9 @@ public class L6Parser implements LanguageParser {
       }
     } catch (StackUnderflowException e) {
       System.err.println(e);
-      return false;
+      System.err.println("Algorithm ran into Stack underflow. " +
+              "Disregard L2 parser's answers.");
+      this.wasErr = true;
     }
     return (this.all.isEmpty() && this.aOnly.isEmpty() && this.bOnly.isEmpty());
   }
@@ -79,5 +85,15 @@ public class L6Parser implements LanguageParser {
     this.all = new StackLL<>();
     this.aOnly = new StackLL<>();
     this.bOnly = new StackLL<>();
+    this.wasErr = false;
+  }
+
+  /**
+   * Gets the boolean value which reflects if the algorithm encountered
+   * an error during runtime.
+   * @return True if the algorithm encountered an error, false otherwise
+   */
+  public boolean isErrorOccurred() {
+    return this.wasErr;
   }
 }
