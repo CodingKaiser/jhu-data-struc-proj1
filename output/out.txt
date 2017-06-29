@@ -94,16 +94,28 @@ Matches: L1 L2 L4
 'BBAAAA'
 Matches: None
 
+'AABBBBC'
+Matches: None
+
+'AABBBAABBBAB'
+Matches: None
+
 'AABBBBAABBBB'
 Matches: L4
 
 '    AABBBB  AABBBB'
 Matches: None
 
+'''
+Matches: None
+
 'AABBBBBAABBBB'
 Matches: None
 
 'AABACDABAA'
+Matches: None
+
+'ACBB'
 Matches: None
 
 'C'
@@ -114,6 +126,9 @@ Matches: L5
 
 'BCB'
 Matches: L5
+
+'CAB'
+Matches: None
 
 'AC'
 Matches: None
