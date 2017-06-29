@@ -8,4 +8,5 @@ public interface LanguageParser {
   boolean isPatternMatch();
   void handleLetter(Character letter);
   void resetParser();
+  boolean isErrorOccurred();
 }

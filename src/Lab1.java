@@ -141,34 +141,53 @@ public class Lab1 {
       out.newLine();
       out.write("Matches:");
       boolean atLeastOneMatch = false;
-      if (this.l1Parser.isPatternMatch()) {
-        atLeastOneMatch = true;
-        out.write(" L1");
+      LanguageParser[] allParsers = {this.l1Parser, this.l2Parser,
+                                     this.l3Parser, this.l4Parser,
+                                     this.l5Parser, this.l6Parser};
+      int parserNumber = 0;
+      for (LanguageParser curr : allParsers) {
+        parserNumber++;
+        if (curr.isPatternMatch()) {
+          atLeastOneMatch = true;
+          out.write(" L" + parserNumber);
+        }
       }
-      if (this.l2Parser.isPatternMatch()) {
-        atLeastOneMatch = true;
-        out.write(" L2");
-      }
-      if (this.l3Parser.isPatternMatch()) {
-        atLeastOneMatch = true;
-        out.write(" L3");
-      }
-      if (this.l4Parser.isPatternMatch()) {
-        atLeastOneMatch = true;
-        out.write(" L4");
-      }
-      if (this.l5Parser.isPatternMatch()) {
-        atLeastOneMatch = true;
-        out.write(" L5");
-      }
-      if (this.l6Parser.isPatternMatch()) {
-        atLeastOneMatch = true;
-        out.write(" L6");
-      }
+//      if (this.l1Parser.isPatternMatch()) {
+//        atLeastOneMatch = true;
+//        out.write(" L1");
+//      }
+//      if (this.l2Parser.isPatternMatch()) {
+//        atLeastOneMatch = true;
+//        out.write(" L2");
+//      }
+//      if (this.l3Parser.isPatternMatch()) {
+//        atLeastOneMatch = true;
+//        out.write(" L3");
+//      }
+//      if (this.l4Parser.isPatternMatch()) {
+//        atLeastOneMatch = true;
+//        out.write(" L4");
+//      }
+//      if (this.l5Parser.isPatternMatch()) {
+//        atLeastOneMatch = true;
+//        out.write(" L5");
+//      }
+//      if (this.l6Parser.isPatternMatch()) {
+//        atLeastOneMatch = true;
+//        out.write(" L6");
+//      }
       if (!atLeastOneMatch) {
         out.write(" None");
       }
       out.newLine();
+      parserNumber = 0;
+      for (LanguageParser curr : allParsers) {
+        parserNumber++;
+        if (curr.isErrorOccurred()) {
+          out.write("L" + parserNumber + " encountered an error");
+          out.newLine();
+        }
+      }
       out.newLine();
       out.write("'");
     } catch (IOException e) {
